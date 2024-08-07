@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import seaborn as sns
 
 #Extraccion info
@@ -48,7 +48,7 @@ fig = px.bar(data_v,data_v.index,data_v['Total Access'])
 
 st.plotly_chart(fig)
 
-st.markdown(" ## Accesos por velocidades de las regines con mayor y menor acceso a Internet")
+st.markdown(" ## Accesos por velocidades de las regiones con mayor y menor acceso a Internet")
 st.markdown("---")
 
 dim = st.radio('Provincias:' , ('Mayor Acceso','Menor Acceso')) # Seleccionador de mayor o menor acceso
@@ -77,7 +77,7 @@ if dim == 'Mayor Acceso':
 
   # Graficas por provinciascon las velocidades de mayoracceso
   #hacemos un subplot para visulaizar las graficas de barras data_top_10 y data_Untop_10
-  fig , axs = plt.subplot(2,3,figsize = (20 ,10)) 
+  fig , axs = plt.subplots(2,3,figsize = (20 ,20)) 
   
 
 
@@ -132,7 +132,7 @@ if dim == 'Menor Acceso':
 
   # Graficas por provinciascon las velocidades de mayoracceso
   #hacemos un subplot para visulaizar las graficas de barras data_top_10 y data_Untop_10
-  fig , axs = plt.subplot(2,3,figsize = (20 ,10)) 
+  fig , axs = plt.subplots(2,3,figsize = (30 ,20)) 
 
 
 
