@@ -55,3 +55,41 @@ if st.button('Graficas'):
     figura= px.pie(df_tecnologias,values=dicc_tecnologias.values() , names = dicc_tecnologias.keys() , color = dicc_tecnologias.keys() ,
                    color_discrete_sequence=colors , title='Distribucion de los accesos a internet por tecnologia')
     st.plotly_chart(figura)
+
+
+
+st.markdown(" ## Graficas de acceso a Tecnologias por provincia")
+st.markdown("---")
+lista_tec = df_tecnologias.index.tolist()
+
+tecnologia = st.multiselect('Seleccione tecnologia',lista_tec,max_selections=1)
+
+data_tec_loc = data_frames['Accesos_tecnologia_localidad'].groupby('Provincia')[['ADSL','CABLEMODEM','DIAL UP','FIBRA OPTICA','OTROS','SATELITAL','WIMAX','WIRELESS']].sum()
+
+
+
+
+
+col1 , col2 = st.columns(2)
+
+with col1:
+    data_top_10 = data_tec_loc.sort_values(by=tecnologia,ascending=False)[:10]
+
+    fig = plt.figure(figsize=(10,6))
+    
+    
+
+    
+    sns.barplot(x='Provincia', y = data_top_10[tecnologia].to_numpy().flatten(), data = data_top_10, palette = 'viridis',hue = 'Provincia')
+    plt.title(f'Top 10 Provincias con mayor demanda de {tecnologia}')
+    plt.xticks(rotation = 90)
+    st.pyplot(fig)
+
+with col2:
+    data_Untop_10= data_tec_loc.sort_values(by=tecnologia,ascending=True)[:10]
+
+    fig = plt.figure(figsize=(10,6))
+    sns.barplot(x='Provincia', y = data_Untop_10[tecnologia].to_numpy().flatten(), data = data_Untop_10, palette = 'PuRd',hue = 'Provincia')
+    plt.title(f'Top 10 Provincias con menor demanda de {tecnologia}')
+    plt.xticks(rotation = 90)
+    st.pyplot(fig)
