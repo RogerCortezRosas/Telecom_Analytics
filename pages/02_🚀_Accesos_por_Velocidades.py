@@ -4,6 +4,8 @@ import numpy as np
 import plotly.express as px
 import matplotlib.pyplot as plt
 import seaborn as sns
+import plotly.graph_objs as go
+from plotly.subplots import make_subplots
 
 #Extraccion info
 hojas = pd.read_excel("Internet.xlsx",sheet_name=None)
@@ -37,7 +39,7 @@ if st.button('Tabla'):
     st.write( data_v)
 
 
-st.markdown(" ## Grafica numero de accesos por velocidades")
+st.subheader("  Grafica numero de accesos por velocidades")
 st.markdown("---")
 
 numero = st.number_input('Selecciona un número', min_value=1, max_value=24, value="min")
@@ -45,6 +47,7 @@ numero = st.number_input('Selecciona un número', min_value=1, max_value=24, val
 
 data_v = data_v.iloc[:numero]
 fig = px.bar(data_v,data_v.index,data_v['Total Access'])
+fig.update_xaxes(title_text ='Velocidades' )
 
 st.plotly_chart(fig)
 
@@ -75,52 +78,25 @@ if dim == 'Mayor Acceso':
   data_MENDOZA_vel = vel_provincia(data_frames['Acc_vel_loc_sinrangos'],'MENDOZA')
   data_ENTRE_RIOS_vel = vel_provincia(data_frames['Acc_vel_loc_sinrangos'],'ENTRE RIOS')
 
-  # Graficas por provinciascon las velocidades de mayoracceso
-  #hacemos un subplot para visulaizar las graficas de barras data_top_10 y data_Untop_10
-  fig , axs = plt.subplots(2,3,figsize = (20 ,20)) 
   
 
+  paleta_colores = sns.color_palette("Reds",len(data_Buenos_Aires_v.index.tolist())).as_hex()
 
-  plt.suptitle('Provincias con mayor accesoa internet', fontsize=20)
+    # Crear subplots (como en el paso anterior)
+  fig = make_subplots(rows=2, cols=3,subplot_titles=('BUENOS AIRES','CABA','CORDOBA','SANTA FE','MENDOZA','ENTRE RIOS'),vertical_spacing=0.3 )
+
+  fig.add_trace(go.Bar(x = data_Buenos_Aires_v.index , y = data_Buenos_Aires_v['Total Access'],marker=dict(color=paleta_colores)),row = 1 , col = 1)
+  fig.add_trace(go.Bar(x = data_CABA_vel.index , y = data_CABA_vel['Total Access'],marker=dict(color=paleta_colores)),row = 1 , col = 2)
+  fig.add_trace(go.Bar(x = data_CORDOBA_vel.index , y = data_CORDOBA_vel['Total Access'],marker=dict(color=paleta_colores)),row = 1 , col = 3)
+  fig.add_trace(go.Bar(x = data_SANTA_FE_vel.index , y = data_SANTA_FE_vel['Total Access'],marker=dict(color=paleta_colores)),row = 2 , col = 1)
+  fig.add_trace(go.Bar(x = data_MENDOZA_vel.index , y = data_MENDOZA_vel['Total Access'],marker=dict(color=paleta_colores)),row = 2 , col = 2)
+  fig.add_trace(go.Bar(x = data_ENTRE_RIOS_vel.index , y = data_ENTRE_RIOS_vel['Total Access'],marker=dict(color=paleta_colores)),row = 2 , col = 3)
+
+  fig.update_layout(yaxis_title = 'Numero de Accesos' )
+  st.plotly_chart(fig)
 
 
-  ax = axs[0,0]
-  ax.set_title("Velocidades de bajada de la provincia de BUENOS AIRES")
-  sns.barplot(x=data_Buenos_Aires_v.index, y='Total Access', data=data_Buenos_Aires_v, palette = 'Reds',hue = data_Buenos_Aires_v.index ,ax=ax)
-  ax.set_xlabel('Velocidades')
-  ax.set_ylabel('Numero de Accesos')
-
-  ax = axs[0,1]
-  ax.set_title("Velocidades de bajada de la provincia de CABA")
-  sns.barplot(x=data_CABA_vel.index, y='Total Access', data=data_CABA_vel, palette = 'Reds',hue = data_CABA_vel.index,ax=ax)
-  ax.set_xlabel('Velocidades')
-  ax.set_ylabel('Numero de Accesos')
-
-  ax = axs[0,2]
-  ax.set_title("Velocidades de bajada de la provincia de CORDOBA")
-  sns.barplot(x=data_CORDOBA_vel.index, y='Total Access', data=data_CORDOBA_vel, palette = 'Reds',hue = data_CORDOBA_vel.index,ax=ax)
-  ax.set_xlabel('Velocidades')
-  ax.set_ylabel('Numero de Accesos')
-
-  ax = axs[1,0]
-  ax.set_title("Velocidades de bajada de la provincia de SANTA FE")
-  sns.barplot(x=data_SANTA_FE_vel.index, y='Total Access', data=data_SANTA_FE_vel,palette = 'Reds',hue = data_SANTA_FE_vel.index,ax=ax)
-  ax.set_xlabel('Velocidades')
-  ax.set_ylabel('Numero de Accesos')
-
-  ax = axs[1,1]
-  ax.set_title("Velocidades de bajada de la provincia de MENDOZA")
-  sns.barplot(x=data_MENDOZA_vel.index, y='Total Access', data=data_MENDOZA_vel,palette = 'Reds',hue = data_MENDOZA_vel.index,ax=ax)
-  ax.set_xlabel('Velocidades')
-  ax.set_ylabel('Numero de Accesos')
-
-  ax = axs[1,2]
-  ax.set_title("Velocidades de bajada de la provincia de ENTRE RIOS")
-  sns.barplot(x=data_ENTRE_RIOS_vel.index, y='Total Access', data=data_ENTRE_RIOS_vel,palette = 'Reds',hue = data_ENTRE_RIOS_vel.index,ax=ax)
-  ax.set_xlabel('Velocidades')
-  ax.set_ylabel('Numero de Accesos')
-
-  st.pyplot(fig)
+  
     
 if dim == 'Menor Acceso':
   data_TF_v=vel_provincia(data_frames['Acc_vel_loc_sinrangos'],'TIERRA DEL FUEGO')
@@ -130,51 +106,25 @@ if dim == 'Menor Acceso':
   data_RIOJA_vel = vel_provincia(data_frames['Acc_vel_loc_sinrangos'],'LA RIOJA')
   data_SJ_vel = vel_provincia(data_frames['Acc_vel_loc_sinrangos'],'SAN JUAN')
 
-  # Graficas por provinciascon las velocidades de mayoracceso
-  #hacemos un subplot para visulaizar las graficas de barras data_top_10 y data_Untop_10
-  fig , axs = plt.subplots(2,3,figsize = (30 ,20)) 
+
+  paleta_colores = sns.color_palette("Blues",len(data_TF_v.index.tolist())).as_hex()
+
+    # Crear subplots (como en el paso anterior)
+  fig = make_subplots(rows=2, cols=3,subplot_titles=('TIERRA DEL FUEGO','FORMOSA','CATAMARCA','SANTA CRUZ','LA RIOJA','SAN JUAN'),vertical_spacing=0.3 )
+
+  fig.add_trace(go.Bar(x = data_TF_v.index , y = data_TF_v['Total Access'],marker=dict(color=paleta_colores)),row = 1 , col = 1)
+  
+ 
+  fig.add_trace(go.Bar(x = data_FOR_vel.index , y = data_FOR_vel['Total Access'],marker=dict(color=paleta_colores)),row = 1 , col = 2)
+  fig.add_trace(go.Bar(x = data_CAT_vel.index , y = data_CAT_vel['Total Access'],marker=dict(color=paleta_colores)),row = 1 , col = 3)
+  fig.add_trace(go.Bar(x = data_SC_vel.index , y = data_SC_vel['Total Access'],marker=dict(color=paleta_colores)),row = 2 , col = 1)
+  fig.add_trace(go.Bar(x = data_RIOJA_vel.index , y = data_RIOJA_vel['Total Access'],marker=dict(color=paleta_colores)),row = 2 , col = 2)
+  fig.add_trace(go.Bar(x = data_SJ_vel.index , y = data_SJ_vel['Total Access'],marker=dict(color=paleta_colores)),row = 2 , col = 3)
+
+  fig.update_layout(yaxis_title = 'Numero de Accesos' )
+
+  st.plotly_chart(fig)
 
 
 
-  plt.suptitle('Provincias con menor Acceso a Internet', fontsize=20)
-
-  ax = axs[0,0]
-  ax.set_title("Velocidades de bajada de la provincia de TIERRA DEL FUEGO")
-  sns.barplot(x=data_TF_v.index, y='Total Access', data=data_TF_v, palette = 'Blues',hue = data_TF_v.index,ax=ax)
-  ax.set_xlabel('Velocidades')
-  ax.set_ylabel('Numero de Accesos')
-
-  ax = axs[0,1]
-  ax.set_title("Velocidades de bajada de la provincia de FORMOSA")
-  sns.barplot(x=data_FOR_vel.index, y='Total Access', data=data_FOR_vel, palette = 'Blues',hue = data_FOR_vel.index,ax=ax)
-  ax.set_xlabel('Velocidades')
-  ax.set_ylabel('Numero de Accesos')
-
-  ax = axs[0,2]
-  ax.set_title("Velocidades de bajada de la provincia de CATAMARCA")
-  sns.barplot(x=data_CAT_vel.index, y='Total Access', data=data_CAT_vel, palette = 'Blues',hue = data_CAT_vel.index,ax=ax)
-  ax.set_xlabel('Velocidades')
-  ax.set_ylabel('Numero de Accesos')
-
-  ax = axs[1,0]
-  ax.set_title("Velocidades de bajada de la provincia de SANTA CRUZ")
-  sns.barplot(x=data_SC_vel.index, y='Total Access', data=data_SC_vel,palette = 'Blues',hue = data_SC_vel.index,ax=ax)
-  ax.set_xlabel('Velocidades')
-  ax.set_ylabel('Numero de Accesos')
-
-  ax = axs[1,1]
-  ax.set_title("Velocidades de bajada de la provincia de LA RIOJA")
-  sns.barplot(x=data_RIOJA_vel.index, y='Total Access', data=data_RIOJA_vel,palette = 'Blues',hue = data_RIOJA_vel.index,ax=ax)
-  ax.set_xlabel('Velocidades')
-  ax.set_ylabel('Numero de Accesos')
-
-  ax = axs[1,2]
-  ax.set_title("Velocidades de bajada de la provincia de SAN JUAN")
-  sns.barplot(x=data_SJ_vel.index, y='Total Access', data=data_SJ_vel,palette = 'Blues',hue = data_SJ_vel.index,ax=ax)
-  ax.set_xlabel('Velocidades')
-  ax.set_ylabel('Numero de Accesos')
-
-  # Ajustar layout
-  plt.tight_layout()
-
-  st.pyplot(fig)
+st.sidebar.image("imagenes/velocidad.png")

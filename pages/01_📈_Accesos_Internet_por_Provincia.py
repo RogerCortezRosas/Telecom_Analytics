@@ -3,7 +3,10 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+
 import plotly.express as px
+import plotly.graph_objs as go
+
 
 
 st.title('Accesos a Internet por Region')
@@ -44,27 +47,39 @@ if st.checkbox('Accesos a Internet por Provincias'):
       st.write( data_frames['Acc_vel_loc_sinrangos'].groupby('Provincia')['Suma_Acceso_Internet'].sum().sort_values(ascending=False))
 
    if st.button('Mostrar Grafica'):
-      fig = plt.figure(figsize=(10,6))
-      sns.barplot(x='Provincia', y='Suma_Acceso_Internet', data=suma_accesos,palette = 'Set3',hue = 'Provincia')
-      plt.title('Cantidad de accesos a internet por provincia')
-      plt.xticks(rotation=90)
-      st.pyplot(fig)
+
+      paleta_colores = sns.color_palette("coolwarm",len(suma_accesos.index.tolist())).as_hex()
+
+      figura = go.Figure()
+
+      figura.add_trace(go.Bar( x = suma_accesos['Provincia'] , y = suma_accesos['Suma_Acceso_Internet'],marker=dict(color=paleta_colores)))
+      figura.update_layout(title='Cantidad de accesos a internet por provincia' )
+
+      st.plotly_chart(figura)
+
+
 
 
 if st.checkbox('Accesos a Internet por Partido'):
    
-    #lista provincias
-    lista_provincias = data_frames['Acc_vel_loc_sinrangos']['Provincia'].unique().tolist()
+   #lista provincias
+   lista_provincias = data_frames['Acc_vel_loc_sinrangos']['Provincia'].unique().tolist()
 
-    #variablequealmacena las provincias seleccionadas porelusuario
-    provincia = st.multiselect('Seleccione las provincia a analizar: ',lista_provincias)
+   #variablequealmacena las provincias seleccionadas porelusuario
+   provincia = st.multiselect('Seleccione las provincia a analizar: ',lista_provincias)
 
-    data_provincia = data_frames['Acc_vel_loc_sinrangos'][data_frames['Acc_vel_loc_sinrangos']['Provincia'].isin(provincia)]
-    data_provincia = data_provincia.groupby('Partido')['Suma_Acceso_Internet'].sum().sort_values(ascending=False)[:10].reset_index()
+   data_provincia = data_frames['Acc_vel_loc_sinrangos'][data_frames['Acc_vel_loc_sinrangos']['Provincia'].isin(provincia)]
+   data_provincia = data_provincia.groupby('Partido')['Suma_Acceso_Internet'].sum().sort_values(ascending=False)[:10].reset_index()
 
-    fig = plt.figure(figsize=(10,6))
-    sns.barplot(x='Partido', y='Suma_Acceso_Internet', data=data_provincia,palette = 'Set3',hue = 'Partido')
-    plt.title('Cantidad de accesos a internet por provincia')
-    plt.xticks(rotation=90)
-    st.pyplot(fig)
+   paleta_colores = sns.color_palette("bright",len(data_provincia.index.tolist())).as_hex()
+
+   figura = go.Figure()
+
+   figura.add_trace(go.Bar( x = data_provincia['Partido'] , y = data_provincia['Suma_Acceso_Internet'],marker=dict(color=paleta_colores)))
+   figura.update_layout(title='Cantidad de accesos a internet por partido' )
+
+   st.plotly_chart(figura)
+
+
+st.image("imagenes/mapa-removebg-preview.png")
 

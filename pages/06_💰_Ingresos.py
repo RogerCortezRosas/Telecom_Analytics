@@ -38,6 +38,6 @@ fig.update_xaxes(range=[2014,2025],tickangle=90,tickvals=[2014,2019,2020,2022,20
 st.plotly_chart(fig)
 
 
-
+st.sidebar.image("imagenes/ingresos.jpg")
 
 

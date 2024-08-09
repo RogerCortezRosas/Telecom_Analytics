@@ -153,3 +153,6 @@ with col2:
     figura.update_layout(title='Top 10 Provincias con MENOR demanda' )
 
     st.plotly_chart(figura)
+
+
+st.sidebar.image("imagenes/satelite.png")

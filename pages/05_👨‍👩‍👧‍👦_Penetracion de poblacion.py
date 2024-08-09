@@ -90,3 +90,5 @@ figura.update_layout(height=600, width=900,title="Penetracion por hogares/habita
 
 
 st.plotly_chart(figura)
+
+st.sidebar.image("imagenes/poblacion.png")
