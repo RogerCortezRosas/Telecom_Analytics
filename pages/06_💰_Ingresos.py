@@ -1,9 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
@@ -36,6 +32,10 @@ fig.update_layout(height=600, width=900,title="Ingresos")
 fig.update_xaxes(range=[2014,2025],tickangle=90,tickvals=[2014,2019,2020,2022,2024])
 
 st.plotly_chart(fig)
+
+
+
+
 
 
 st.sidebar.image("imagenes/ingresos.jpg")
