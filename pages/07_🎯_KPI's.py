@@ -17,6 +17,8 @@ for hoja, df in hojas.items():
 st.title("KPI's")
 
 
+st.subheader('Aumento 2% al acceso al servicio de internet para el proximo trimestre , cada 100 hogares , por provincia')
+
 penetracion_provincias = data_frames['Penetración-poblacion']
 
 #Agregamos una nueva columna al DataFrame y lea gregamos la columna de Accesos por cada 100 hogares de la hoja hogares
@@ -34,7 +36,7 @@ fig.add_trace(go.Bar(
                       x = penetracion_2024['Provincia'] , 
                       y = penetracion_2024['Accesos por cada 100 hogares'] ,
                       name = 'Acceso Actual',
-                      marker_color = 'blue'
+                      marker_color = 'darkred'
 ))
 
 
@@ -42,7 +44,33 @@ fig.add_trace(go.Bar(
                       x = penetracion_2024['Provincia'] , 
                       y = penetracion_2024['Nuevo_Acceso'] ,
                       name = 'Acceso Aumento 2 %',
-                      marker_color = 'red'
+                      marker_color = 'lightcoral'
 ))
 
 st.plotly_chart(fig)
+
+st.subheader('Aumento 5% del numero de accesos de fibra optica para el proximo trimestre , para todas las provinicias ')
+
+data_tec_loc = data_frames['Accesos_tecnologia_localidad'].groupby('Provincia')[['FIBRA OPTICA']].sum()
+data_tec_loc['Nuevo_Acceso'] = data_tec_loc['FIBRA OPTICA'] * 1.05
+
+figura = go.Figure()
+
+# Grafica del trimestre actual
+
+figura.add_trace(go.Bar(
+                      x = data_tec_loc['Provincia'] , 
+                      y = data_tec_loc['FIBRA OPTICA'] ,
+                      name = 'Acceso Actual',
+                      marker_color = 'darkgreen'
+))
+
+
+figura.add_trace(go.Bar(
+                      x = data_tec_loc['Provincia'] , 
+                      y = data_tec_loc['Nuevo_Acceso'] ,
+                      name = 'Acceso Aumento 5 %',
+                      marker_color = 'mediumseagreen'
+))
+
+st.plotly_chart(figura)
