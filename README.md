@@ -7,9 +7,9 @@ En este repositorio contiene el Analisis de datos de internet en Argentina.En do
 
 ##  DashBoard
 
-URL : https://datanalytics01.streamlit.app/
 
-### Contenido
+
+### **Contenido**
 
 El dashboard contiene 7 paginas principales en las cuales cada una hace analisis de una rubrica , las paginas son:
 - Acceso a Internet por provincia
@@ -20,7 +20,7 @@ El dashboard contiene 7 paginas principales en las cuales cada una hace analisis
 - Ingresos
 - KPI's
 
-#### Acceso a Internet por provincia
+#### **Acceso a Internet por provincia**
 
 En esta pagina se visualizan tablas y graficas del acceso a internet que tienen por cada provincia y por partido mostrando los 10 partidos con mayor acceso a Internet para la provincia seleccionada.
 
@@ -29,7 +29,7 @@ En esta pagina se visualizan tablas y graficas del acceso a internet que tienen 
 </div>
 
 
-#### Acceso por velocidades
+#### **Acceso por velocidades**
 
 En esta pagina contiene las graficas en dodnde se visualizanla cantidad de accesos a ls diferentes tipos de velocidades destacando el uso de los 300 y 100 Mbps.Ademas, contien las graficas en donde se puede observar las 5 velocidades que tienen mayor acceso para las 6 provincias que tienen  mayor y menor acceso a internet.
 
@@ -39,7 +39,7 @@ En esta pagina contiene las graficas en dodnde se visualizanla cantidad de acces
 </div>
 
 
-#### Acceso por tecnologia
+#### **Acceso por tecnologia**
 
 En esta pagina contiene las graficas donde se visualiza el porcentaje de acceso a las tecnologias de Fibra optica , Cable Modem , ADSL , Wireless, entre otras. Tambien se visualiza el comportamiento en el tiempo del numero de accesos pasra cada tecnologia.Otras de las graficas dentro de esta pagina es la taza promedo de crecimiento de cada tecnologia y las provinicas que tienen mayor acceso para cada tecnologia.
 
@@ -47,7 +47,7 @@ En esta pagina contiene las graficas donde se visualiza el porcentaje de acceso 
   <img src="imagenes/fibra_optica.jpg" alt="Interfaz del Proyecto" width="200"/>
 </div>
 
-#### Comportamiento en el tiempo
+#### **Comportamiento en el tiempo**
 
 En esta pagina se encuentran las graficas en donde se puede visualizar el comportamiento en el tiempo de el acceso promedio de velocidades , la taza de crecimiento totales.Tambien se puede visualizar graficas de la velocidad promedio para las provincias seleccionadas asi como tambien la taza promedio de crecimiento de la velocidad para cada provincia.
 
@@ -55,7 +55,7 @@ En esta pagina se encuentran las graficas en donde se puede visualizar el compor
   <img src="imagenes/graficas.png" alt="Interfaz del Proyecto" width="200"/>
 </div>
 
-#### Penetracion de poblacion
+#### **Penetracion de poblacion**
 
 En esta pagina se encuentran las graficas relacionadas a la penetracion de internet en hogares y habitantes . Donde se puede observar su comportamiento en el tiempo y la penetracion por cada provincia.
 
@@ -63,7 +63,7 @@ En esta pagina se encuentran las graficas relacionadas a la penetracion de inter
   <img src="imagenes/crecimiento.png" alt="Interfaz del Proyecto" width="200"/>
 </div>
 
-#### Ingresos
+#### **Ingresos**
 
 En esta pagina se visualiza la cantidad de ingresos por año en un periodo de 2014 - 2024
 
@@ -71,3 +71,48 @@ En esta pagina se visualiza la cantidad de ingresos por año en un periodo de 20
 <div align="center">
   <img src="imagenes/ingresos.jpg" alt="Interfaz del Proyecto" width="200"/>
 </div>
+
+#### ** KPI's **
+
+En esta pagina se encuientran graficados lños KPI's
+
+## Acceso al DashBoard
+
+Para accder al dasboard ingresar a la siguiente enlace :
+
+URL : https://datanalytics01.streamlit.app/
+
+## Contenido del repositorio
+
+Este repositorio cuenta con tres carpetas las cualese describen a continuacion :
+
+- imagenes : Ene sta carpeta se encuentran las imagenes utilizadas en el dashboard y en el presente archivo readme
+- pages : Es el codigo de cada una de las paginas del dashboard
+- venv : Es en entorno virtual python
+
+A continuacion se hace una breve descripcion de los archivos que se encuentran dentro del repositorio : 
+ - dasboard.py : Es el archivo principal del dashboard endonde se ejecuta streamlit para la visualizacion de la pagina web
+ - EDA.ipynb : Es el notebook que contiene la graficas y analisis de la data
+ - Internet.xlsx : Archivo que conteiene la informacion
+ - requiremnts.txt : Archivo en donde se localizan laslibrerias utilizadas
+
+## Librerias utilizadas
+
+Algunas de las librerias utilizadas en este proyecto son :
+
+- Streamlit
+- Pandas
+- Plotly
+
+Para ver la lista completa de librerias con su version acceder al archivo requirements.txt de este repositorio
+
+
+
+## Autor
+
+Rogelio Cortez Rosas
+
+**Contacto **
+
+correo : rcortezrosas@gmail.com
+Git hub user : RogerCortezRosas
