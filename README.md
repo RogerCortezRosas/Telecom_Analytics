@@ -20,10 +20,54 @@ El dashboard contiene 7 paginas principales en las cuales cada una hace analisis
 - Ingresos
 - KPI's
 
-### Acceso a Internet por provincia
+#### Acceso a Internet por provincia
 
 En esta pagina se visualizan tablas y graficas del acceso a internet que tienen por cada provincia y por partido mostrando los 10 partidos con mayor acceso a Internet para la provincia seleccionada.
 
 <div align="center">
   <img src="imagenes/mapa-removebg-preview.png" alt="Interfaz del Proyecto" width="200"/>
+</div>
+
+
+#### Acceso por velocidades
+
+En esta pagina contiene las graficas en dodnde se visualizanla cantidad de accesos a ls diferentes tipos de velocidades destacando el uso de los 300 y 100 Mbps.Ademas, contien las graficas en donde se puede observar las 5 velocidades que tienen mayor acceso para las 6 provincias que tienen  mayor y menor acceso a internet.
+
+
+<div align="center">
+  <img src="imagenes/velocidad.jpg" alt="Interfaz del Proyecto" width="200"/>
+</div>
+
+
+#### Acceso por tecnologia
+
+En esta pagina contiene las graficas donde se visualiza el porcentaje de acceso a las tecnologias de Fibra optica , Cable Modem , ADSL , Wireless, entre otras. Tambien se visualiza el comportamiento en el tiempo del numero de accesos pasra cada tecnologia.Otras de las graficas dentro de esta pagina es la taza promedo de crecimiento de cada tecnologia y las provinicas que tienen mayor acceso para cada tecnologia.
+
+<div align="center">
+  <img src="imagenes/fibra_optica.jpg" alt="Interfaz del Proyecto" width="200"/>
+</div>
+
+#### Comportamiento en el tiempo
+
+En esta pagina se encuentran las graficas en donde se puede visualizar el comportamiento en el tiempo de el acceso promedio de velocidades , la taza de crecimiento totales.Tambien se puede visualizar graficas de la velocidad promedio para las provincias seleccionadas asi como tambien la taza promedio de crecimiento de la velocidad para cada provincia.
+
+<div align="center">
+  <img src="imagenes/graficas.png" alt="Interfaz del Proyecto" width="200"/>
+</div>
+
+#### Penetracion de poblacion
+
+En esta pagina se encuentran las graficas relacionadas a la penetracion de internet en hogares y habitantes . Donde se puede observar su comportamiento en el tiempo y la penetracion por cada provincia.
+
+<div align="center">
+  <img src="imagenes/crecimiento.png" alt="Interfaz del Proyecto" width="200"/>
+</div>
+
+#### Ingresos
+
+En esta pagina se visualiza la cantidad de ingresos por año en un periodo de 2014 - 2024
+
+
+<div align="center">
+  <img src="imagenes/ingresos.jpg" alt="Interfaz del Proyecto" width="200"/>
 </div>
