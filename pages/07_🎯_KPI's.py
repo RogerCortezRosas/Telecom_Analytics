@@ -74,3 +74,53 @@ figura.add_trace(go.Bar(
 ))
 
 st.plotly_chart(figura)
+
+st.subheader(" Acceso de 0 % a la tecnologia de ADSL en 2 años ( tomando la taza de crecimiento)")
+
+# Eliminamos las filas que tienen en provincia valores nulos
+data_frames['Accesos_tecnologia_localidad'] = data_frames['Accesos_tecnologia_localidad'].dropna(subset=['Provincia'])
+
+#Hacemos la sumatoria de accesos de internet por tecnologia
+
+dicc_tecnologias ={
+    'ADSL':0,
+
+}
+
+dicc_tecnologias['ADSL'] = data_frames['Accesos_tecnologia_localidad']['ADSL'].sum()
+
+trimestres_totales = 9
+
+
+decremento_trimestral = dicc_tecnologias['ADSL'] / trimestres_totales
+
+# Crear DataFrame con la proyección de accesos por trimestre
+data = {
+    'Trimestre': list(range(1, trimestres_totales + 1)),
+    'Accesos_ADSL': [dicc_tecnologias['ADSL'] - decremento_trimestral * i for i in range(trimestres_totales + 1)]
+}
+df = pd.DataFrame(data)
+
+# Crear la gráfica de línea
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=df['Trimestre'],
+    y=df['Accesos_ADSL'],
+    mode='lines+markers',
+    name='Accesos ADSL',
+    line=dict(color='red', width=4),
+    marker=dict(size=10)
+))
+
+# Añadir título y etiquetas
+fig.update_layout(
+    title='Decrecimiento del Número de Accesos ADSL por Trimestre',
+    xaxis_title='Trimestre',
+    yaxis_title='Número de Accesos ADSL',
+    xaxis=dict(tickmode='linear', dtick=1),
+    yaxis=dict(tickformat='~s')  # Para formato simplificado de números grandes
+)
+
+# Mostrar la gráfica
+fig.show()
