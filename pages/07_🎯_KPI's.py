@@ -42,7 +42,7 @@ fig.add_trace(go.Bar(
                       x = penetracion_2024['Provincia'] , 
                       y = penetracion_2024['Nuevo_Acceso'] ,
                       name = 'Acceso Aumento 2 %',
-                      marker_color = 'blue'
+                      marker_color = 'red'
 ))
 
 st.plotly_chart(fig)
