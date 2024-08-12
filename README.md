@@ -7,10 +7,9 @@ En este repositorio contiene el Analisis de datos de internet en Argentina.En do
 
 ##  DashBoard
 
-URL
-https://datanalytics01.streamlit.app/
+URL : https://datanalytics01.streamlit.app/
 
-Contenido
+### Contenido
 
 El dashboard contiene 7 paginas principales en las cuales cada una hace analisis de una rubrica , las paginas son:
 - Acceso a Internet por provincia
@@ -21,3 +20,10 @@ El dashboard contiene 7 paginas principales en las cuales cada una hace analisis
 - Ingresos
 - KPI's
 
+### Acceso a Internet por provincia
+
+En esta pagina se visualizan tablas y graficas del acceso a internet que tienen por cada provincia y por partido mostrando los 10 partidos con mayor acceso a Internet para la provincia seleccionada.
+
+<div align="center">
+  <img src="imagenes/mapa-removebg-preview.png" alt="Interfaz del Proyecto" width="600"/>
+</div>
