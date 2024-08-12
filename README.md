@@ -25,5 +25,5 @@ El dashboard contiene 7 paginas principales en las cuales cada una hace analisis
 En esta pagina se visualizan tablas y graficas del acceso a internet que tienen por cada provincia y por partido mostrando los 10 partidos con mayor acceso a Internet para la provincia seleccionada.
 
 <div align="center">
-  <img src="imagenes/mapa-removebg-preview.png" alt="Interfaz del Proyecto" width="600"/>
+  <img src="imagenes/mapa-removebg-preview.png" alt="Interfaz del Proyecto" width="200"/>
 </div>
