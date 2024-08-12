@@ -74,7 +74,9 @@ En esta pagina se visualiza la cantidad de ingresos por año en un periodo de 20
 
 #### **KPI's**
 
-En esta pagina se encuientran graficados lños KPI's
+En esta pagina se encuentran graficados los KPI's
+
+- Aumento de 2% acceso al servicio de internet por provinica
 
 ## Acceso al DashBoard
 
