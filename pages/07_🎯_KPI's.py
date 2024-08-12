@@ -59,7 +59,7 @@ figura = go.Figure()
 # Grafica del trimestre actual
 
 figura.add_trace(go.Bar(
-                      x = data_tec_loc['Provincia'] , 
+                      x = data_tec_loc.index , 
                       y = data_tec_loc['FIBRA OPTICA'] ,
                       name = 'Acceso Actual',
                       marker_color = 'darkgreen'
@@ -67,7 +67,7 @@ figura.add_trace(go.Bar(
 
 
 figura.add_trace(go.Bar(
-                      x = data_tec_loc['Provincia'] , 
+                      x = data_tec_loc.index , 
                       y = data_tec_loc['Nuevo_Acceso'] ,
                       name = 'Acceso Aumento 5 %',
                       marker_color = 'mediumseagreen'
