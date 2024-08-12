@@ -99,7 +99,9 @@ data = {
     'Trimestre': list(range(1, trimestres_totales + 1)),
     'Accesos_ADSL': [dicc_tecnologias['ADSL'] - decremento_trimestral * i for i in range(trimestres_totales + 1)]
 }
-df = pd.DataFrame(data)
+
+df = pd.DataFrame.from_dict(data,orient = 'index',columns = ['Trimestre','Accesos_ADSL'])
+
 
 # Crear la gráfica de línea
 fig = go.Figure()
