@@ -96,7 +96,7 @@ decremento_trimestral = dicc_tecnologias['ADSL'] / trimestres_totales
 
 # Crear DataFrame con la proyección de accesos por trimestre
 data = {
-        'Trimestre' : ['2024','','','','2025','','','','2026',''] ,
+        'Trimestre' : ['2024','2024/1','2024/2','2024/3','2025','2025/1','2025/2','2025/3','2026','2026/1'] ,
     
         'Accesos_ADSL': [dicc_tecnologias['ADSL'] - decremento_trimestral * i for i in range(trimestres_totales + 1)]
 }
