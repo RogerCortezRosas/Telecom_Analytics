@@ -4,6 +4,7 @@ import seaborn as sns
 import plotly.express as px
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
+import matplotlib.pyplot as plt
 
 #Extraccion info
 hojas = pd.read_excel("Internet.xlsx",sheet_name=None)
@@ -99,7 +100,7 @@ lista_tazas = []
 
 for provincia in lis_prov:
    val_prov =  data_frames['Velocidad % por prov'][data_frames['Velocidad % por prov']['Provincia'] == provincia]
-   val_prov = val_prov.sort_values(by='Año',ascending=True)
+   val_prov = val_prov.sort_values(by=['Año','Trimestre'],ascending=True)
    val_prov = val_prov['Mbps (Media de bajada)'].pct_change() * 100
    lista_tazas.append(val_prov.mean())
 
@@ -118,7 +119,6 @@ figura.update_layout(title='Taza crecimiento' )
 
 st.plotly_chart(figura)
 
-
 st.subheader('Accesos a tecnologias por provincia a traves del tiempo')
 
 tec_provincia = data_frames['Accesos Por Tecnología']
@@ -136,7 +136,7 @@ list_tec = tec_totales.columns[2:7]
 
 def taza_crecimiento(data):
   """Funcion que obtiene un dataframe con las taza de crecimientode cada tecnologia"""
-  data = data.sort_values(by='Año',ascending=True)
+  data = data.sort_values(by=['Año','Trimestre'],ascending=True)
   taza_tec = {}
   for i in list_tec:
     val = data[i].pct_change() * 100
@@ -146,9 +146,9 @@ def taza_crecimiento(data):
 
 # Definir la función que se ejecutará al cambiar la selección
 def actualizar_mensaje():
-    st.session_state['mensaje'] = f"Has seleccionado {len(st.session_state['frutas'])} provinica."
+    st.session_state['mensaje'] = f"Has seleccionado {len(st.session_state['num'])} provincias."
 
-Provincia = st.multiselect("Elije las provincias",lista_provincias,max_selections=1,default='Buenos Aires',key='frutas', on_change=actualizar_mensaje)
+Provincia = st.multiselect("Elije las provincias",lista_provincias,max_selections=1,default='Buenos Aires',key='num', on_change=actualizar_mensaje)
 # Mostrar el mensaje actualizado
 st.write(st.session_state.get('mensaje', "Aún no has seleccionado ninguna provincia."))
 

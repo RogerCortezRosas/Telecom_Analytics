@@ -52,7 +52,7 @@ def taza_crecimiento_penetracion_total(data):
   
   for provincia in lista_provincias:
     val_prov = data[data['Provincia'] == provincia]
-    val_prov = val_prov.sort_values(by='Año',ascending=True)
+    val_prov = val_prov.sort_values(by=['Año','Trimestre'],ascending=True)
     
     for i in lista_pen:
       
@@ -83,7 +83,7 @@ figura.add_trace(go.Bar(x = hogares['Provincia'] , y = hogares['Accesos por cada
 figura.add_trace(go.Bar(x = habitantes['Provincia'] , y = habitantes['Accesos por cada 100 hab'],marker=dict(color=paletas_colores)),row = 1 , col = 2)
 
 
-figura.update_layout(height=600, width=900,title="Penetracion por hogares/habitantes totales")
+figura.update_layout(height=600, width=900,title="Taza promedio de crecimiento de penetracion por hogares/habitantes totales")
 
 
 st.plotly_chart(figura)

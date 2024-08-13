@@ -86,7 +86,7 @@ st.plotly_chart(fig)
 st.markdown(" ### Taza promedio de crecimiento")
 st.markdown("---")
 
-tec_totales_taza = tec_totales.sort_values(by='Año',ascending=True)
+tec_totales_taza = tec_totales.sort_values(by=['Año','Trimestre'],ascending=True)
 
 taza_tec = {}
 for i in list_tec:
