@@ -96,13 +96,14 @@ decremento_trimestral = dicc_tecnologias['ADSL'] / trimestres_totales
 
 # Crear DataFrame con la proyección de accesos por trimestre
 data = {
+        'Trimestre' : ['2024','','','','2025','','','','2026'] ,
     
-    'Accesos_ADSL': [dicc_tecnologias['ADSL'] - decremento_trimestral * i for i in range(trimestres_totales + 1)]
+        'Accesos_ADSL': [dicc_tecnologias['ADSL'] - decremento_trimestral * i for i in range(trimestres_totales + 1)]
 }
 
-list_años = ['2024','','','','2025','','','','2026']
 
-df = pd.DataFrame.from_dict(data,orient = 'index',columns = [list_años,'Accesos_ADSL'])
+
+df = pd.DataFrame.from_dict(data,orient = 'index',columns = ['Trimestre','Accesos_ADSL'])
 
 
 
@@ -110,7 +111,7 @@ df = pd.DataFrame.from_dict(data,orient = 'index',columns = [list_años,'Accesos
 fig = go.Figure()
 
 fig.add_trace(go.Scatter(
-    x=list_años,
+    x=df['Trimestre'],
     y=df['Accesos_ADSL'],
     mode='lines+markers',
     name='Accesos ADSL',
