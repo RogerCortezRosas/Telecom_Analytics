@@ -108,9 +108,9 @@ df = pd.DataFrame.from_dict(data)
 
 
 # Crear la gráfica de línea
-fig = go.Figure()
+figure = go.Figure()
 
-fig.add_trace(go.Scatter(
+figure.add_trace(go.Scatter(
     x=df['Trimestre'],
     y=df['Accesos_ADSL'],
     mode='lines+markers',
@@ -120,7 +120,7 @@ fig.add_trace(go.Scatter(
 ))
 
 # Añadir título y etiquetas
-fig.update_layout(
+figure.update_layout(
     title='Decrecimiento del Número de Accesos ADSL por Trimestre',
     xaxis_title='Trimestre',
     yaxis_title='Número de Accesos ADSL',
@@ -129,4 +129,4 @@ fig.update_layout(
 )
 
 # Mostrar la gráfica
-fig.show()
+st.plotly_chart(figure)
