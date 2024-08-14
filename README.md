@@ -76,7 +76,9 @@ En esta pagina se visualiza la cantidad de ingresos por año en un periodo de 20
 
 En esta pagina se encuentran graficados los KPI's
 
-- Aumento de 2% acceso al servicio de internet por provinica
+- Aumento de 2% acceso al servicio de internet por provincia
+- Aumento 5% del numero de accesos de fibra optica para el proximo trimestre , para todas las provinicias
+- Acceso de 0 % a la tecnologia de ADSL en 2 años ( tomando la taza de crecimiento)
 
 ## Acceso al DashBoard
 
