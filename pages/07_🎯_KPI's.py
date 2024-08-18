@@ -29,32 +29,9 @@ penetracion_provincias['Accesos por cada 100 hogares'] = data_frames['Penetracio
 lista_provinicias =  penetracion_provincias['Provincia'].unique().tolist() # lista de provincias
 lista_pen = penetracion_provincias.columns[:][-2:].tolist() # lista de penetracion provincias
 
-def taza_crecimiento_penetracion_total(data):
-  """Funcion que obtiene un dataframe con las taza de crecimientode de la penetracion por hogar y por habitante por provincia"""
-  
-  df_general = pd.DataFrame(columns=['Provincia','Accesos por cada 100 hab','Accesos por cada 100 hogares'])
-  df_general['Provincia'] = lista_provinicias
-  taza_pen = {}
-  contador = 0
-  
-  for provincia in lista_provinicias:
-    val_prov = data[data['Provincia'] == provincia]
-    val_prov = val_prov.sort_values(by=['Año','Trimestre'],ascending=True)
-    
-    for i in lista_pen:
-      
-      val = val_prov[i].pct_change() * 100
-      taza_pen[i] = val.mean()
 
-    df_taza_pen = pd.DataFrame.from_dict(taza_pen,orient='index',columns=['Taza'])
-    df_general.iloc[contador,1:] = df_taza_pen.T.iloc[0, :df_general.shape[1]]
 
-    contador +=1
-    
 
-  return df_general
-
-taza_penetracion_total = taza_crecimiento_penetracion_total(penetracion_provincias)
 
 
 # Definir la función que se ejecutará al cambiar la selección
@@ -69,17 +46,38 @@ st.write(st.session_state.get('mensaje', "Aún no has seleccionado ninguna provi
 
 
 if len(Provincia) != 0:
+    
+
+    def taza_crecimiento_penetracion_total(data):
+  
+      data = data[data['Provincia'] == Provincia[0]]
+      data = data.sort_values(by=['Año','Trimestre'],ascending=True)
+      
+      
+        
+      data['taza'] = data['Accesos por cada 100 hogares'].pct_change() * 100
+      taza_trimestre = data.groupby('Trimestre')['taza'].mean().reset_index()
+    
+
+    
+
+      return taza_trimestre
+
+    taza_trimestre = taza_crecimiento_penetracion_total(penetracion_provincias.copy())
+
 
     df_provincia = penetracion_provincias[penetracion_provincias['Provincia']==Provincia[0]] # Obtenemos el  dataframe por provincia seleccionada
     df_provincia = df_provincia[df_provincia['Año'] == 2024]
-    df_provincia.sort_values(by=['Año','Trimestre'] , ascending=True , inplace=True) # Ordenamos de menor a mayor
+    df_provincia.sort_values(by=['Año','Trimestre'] , ascending=False , inplace=True) # Ordenamos de menor a mayor
     df_provincia.drop(columns='Accesos por cada 100 hab',inplace=True) # Eliminamos columna inecesaria
     df_provincia.reset_index(inplace=True)
     df_provincia.drop(columns='index',inplace=True) # Eliminamos columna inecesaria
+    df_provincia['Periodo'] = df_provincia['Año'].astype(str) + '-Q' + df_provincia['Trimestre'].astype(str)
+    df_provincia.drop(columns=['Año','Trimestre'],inplace=True) # Eliminamos columna inecesaria
 
     val = df_provincia.iloc[len(df_provincia)-1]['Accesos por cada 100 hogares'] #Obtenemos el valor del ultimo trimestre 2024
-    taza = taza_penetracion_total[taza_penetracion_total['Provincia'] == Provincia[0]]['Accesos por cada 100 hogares'] # valor dela taza de crecimiento de la provincia
-    suma = val + taza.iloc[0] # suma del valor del ultimo trimestre mas la taza
+    taza = float(taza_trimestre['taza'].mean()) # valor dela taza de crecimiento promedio de la provincia por trimetre
+    suma = val + taza # suma del valor del ultimo trimestre mas la taza
     
     
     kpi = df_provincia.iloc[len(df_provincia)-1]['Accesos por cada 100 hogares'] * 1.02 # valor que es el 2% de crecimiento respecto al ultimo trimestre
@@ -89,27 +87,39 @@ if len(Provincia) != 0:
     graf_kpi = df_provincia.copy() # Obtenemos nuevo df y lo llamamos graf_kpi
     graf_taza = df_provincia.copy()
     
-    graf_kpi.loc[len(graf_kpi)] = ['2024-1',2,Provincia[0],kpi ] # agrgamos ultima fila que representa el valor en el ultimo semestre al calculo del kpi
-    graf_taza.loc[len(graf_taza)] = ['2024-1',2,Provincia[0],suma ] # agregamos ultima fila que representa el valor en el ultimo semestre al calculo de la taza
+    
+    graf_kpi.loc[len(graf_kpi)] = [Provincia[0],kpi,'2024-Q2' ] # agrgamos ultima fila que representa el valor en el ultimo semestre al calculo del kpi
+    graf_taza.loc[len(graf_taza)] = [Provincia[0],suma ,'2024-Q2'] # agregamos ultima fila que representa el valor en el ultimo semestre al calculo de la taza
 
     # Crear la gráfica de línea
     figure = go.Figure()
 
     figure.add_trace(go.Bar(
-        x=graf_taza['Año'],
+        x=graf_taza['Periodo'],
         y=graf_taza['Accesos por cada 100 hogares'],
         marker_color = 'darkgreen',
         name='Accesos taza',
+        text = graf_taza['Accesos por cada 100 hogares'],
+        texttemplate='%{text:.3f}' , # Formato del texto
+        textposition='outside',  # Posición del texto
+        textfont = dict(size = 14,color = 'yellow')
         
     ))
 
     figure.add_trace(go.Bar(
-        x=graf_kpi['Año'],
+        x=graf_taza['Periodo'],
         y=graf_kpi['Accesos por cada 100 hogares'],
         marker_color = 'mediumseagreen',
         name='Accesos kpi',
         
+       
+        
     ))
+
+    # Personalización
+    figure.update_layout(title='Accesos por Año y Trimestre',
+                  xaxis_title='Periodo',
+                  yaxis_title='Número de Accesos')
 
     st.plotly_chart(figure)
 
@@ -117,9 +127,11 @@ if len(Provincia) != 0:
     col1 , col2 = st.columns(2)
 
     with col1:
-       st.write(graf_kpi)
+      st.write(graf_taza)
     with col2:
-       st.write(graf_taza)
+       porcentaje = (suma * 100) / kpi
+       porcentaje = str(porcentaje) + '%'
+       st.metric(label = 'Accesos objetivo' , value = kpi , delta = porcentaje)
 
 
 st.subheader('Aumento 5% del numero de accesos de fibra optica para el proximo trimestre , para todas las provinicias ')
@@ -143,7 +155,8 @@ figura.add_trace(go.Bar(
                       x = data_tec_loc.index , 
                       y = data_tec_loc['Nuevo_Acceso'] ,
                       name = 'Acceso Aumento 5 %',
-                      marker_color = 'mediumseagreen'
+                      marker_color = 'mediumseagreen',
+                      text = data_tec_loc['Nuevo_Acceso']
 ))
 
 st.plotly_chart(figura)
@@ -181,25 +194,30 @@ df = pd.DataFrame.from_dict(data)
 
 
 # Crear la gráfica de línea
-figure = go.Figure()
 
-figure.add_trace(go.Scatter(
+
+fi=go.Figure(data=[go.Scatter(
     x=df['Trimestre'],
     y=df['Accesos_ADSL'],
     mode='lines+markers',
     name='Accesos ADSL',
     line=dict(color='red', width=4),
-    marker=dict(size=10)
-))
+    marker=dict(size=10,color='pink'),
+    text = df['Accesos_ADSL'],
+    texttemplate='%{text:.2f}' , # Formato del texto
+    textfont = dict(size = 30,color = 'yellow'),
+    textposition='top left'
+
+)])
 
 # Añadir título y etiquetas
-figure.update_layout(
+fi.update_layout(
     title='Decrecimiento del Número de Accesos ADSL por Trimestre',
     xaxis_title='Trimestre',
     yaxis_title='Número de Accesos ADSL',
     xaxis=dict(tickmode='linear', dtick=1),
-    yaxis=dict(tickformat='~s')  # Para formato simplificado de números grandes
+    
 )
 
 # Mostrar la gráfica
-st.plotly_chart(figure)
+st.plotly_chart(fi)
