@@ -2,18 +2,22 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
+import recarga_datos as reload
 
-#Extraccion info
-hojas = pd.read_excel("Internet.xlsx",sheet_name=None)
 
-#Diccionario de DataFrames
-data_frames = {}
-for hoja, df in hojas.items():
-  data_frames[hoja] = df
+
+st.title('Accesos a Internet por Region')
+
+if st.button('Actualizar Datos'):
+   reload.reload_table()
+   st.success('Datos actualizados')
+
+
+dataframes_dict = st.session_state.dataframes_dict # Acceder al diccionario de DataFrames
 
 st.title("Ingresos")
 
-data_ingresos = data_frames['Ingresos '] 
+data_ingresos = dataframes_dict['ingresos'] 
 data_ingresos.replace(2033,2023,inplace=True)
 data_ingresos.sort_values(by='Año',ascending=True,inplace=True)
 taza_ingresos = data_ingresos['Ingresos (miles de pesos)'].pct_change() * 100

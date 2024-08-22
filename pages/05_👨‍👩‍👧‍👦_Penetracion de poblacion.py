@@ -3,24 +3,26 @@ import pandas as pd
 import seaborn as sns
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
-
-#Extraccion info
-hojas = pd.read_excel("Internet.xlsx",sheet_name=None)
-
-#Diccionario de DataFrames
-data_frames = {}
-for hoja, df in hojas.items():
-  data_frames[hoja] = df
+import recarga_datos as reload
 
 
 
-st.title("Penetracion por habitantes/hogares")
+st.title('Accesos a Internet por Region')
+
+if st.button('Actualizar Datos'):
+   reload.reload_table()
+   st.success('Datos actualizados')
+
+dataframes_dict = st.session_state.dataframes_dict # Acceder al diccionario de DataFrames
 
 
-penetracion_total = data_frames['Penetracion-totales']
+st.title("Penetracion por habitantes/hogares")# Titulo _________________________________________________________________________________________________________________________
 
 
-# Crear subplots (como en el paso anterior)
+penetracion_total = dataframes_dict['penetracion_totales'] # Creacion de df 
+
+
+# Grafica _____________________________________________________________________________________________________________________
 fig = make_subplots(rows=1, cols=2,subplot_titles=('Penetracion por hogares','Penetracion por habitantes'))
 
 
@@ -35,52 +37,61 @@ st.plotly_chart(fig)
 
 ######################################################################################################################################
 
-#Obtenemos un Dataframe  de la hoja Penetración-poblacion
-penetracion_provincias = data_frames['Penetración-poblacion']
-#Agregamos una nueva columna al DataFrame y leagregamos la columna de Accesos por cada 100 hogares de la hoja hogares
-penetracion_provincias['Accesos por cada 100 hogares'] = data_frames['Penetracion-hogares']['Accesos por cada 100 hogares']
-lista_provincias = penetracion_provincias['Provincia'].unique().tolist()
-lista_pen = penetracion_provincias.columns[:][-2:].tolist()
+
+penetracion_provincias = dataframes_dict['penetración_poblacion'] #Obtenemos un Dataframe  de la hoja penetración_poblacion
+
+penetracion_provincias['Accesos por cada 100 hogares'] = dataframes_dict['penetracion_hogares']['Accesos por cada 100 hogares'] #Agregamos una nueva columna al DataFrame y le agregamos la columna de Accesos por cada 100 hogares de la hoja hogares
+lista_provincias = penetracion_provincias['Provincia'].unique().tolist() # Creacion lista de provincias
+lista_pen = penetracion_provincias.columns[:][-2:].tolist() # lista de penentracion hogares / habitantes
 
 def taza_crecimiento_penetracion_total(data):
   """Funcion que obtiene un dataframe con las taza de crecimientode de la penetracion por hogar y por habitante por provincia"""
-  
-  df_general = pd.DataFrame(columns=['Provincia','Accesos por cada 100 hab','Accesos por cada 100 hogares'])
-  df_general['Provincia'] = lista_provincias
+    
+  df_general = pd.DataFrame(columns=['Provincia','Accesos por cada 100 hab','Accesos por cada 100 hogares']) # Se crea un data frame df_general
+  df_general['Provincia'] = lista_provincias #Asigna la lista a la columna Provincia
   taza_pen = {}
   contador = 0
-  
+
   for provincia in lista_provincias:
-    val_prov = data[data['Provincia'] == provincia]
-    val_prov = val_prov.sort_values(by=['Año','Trimestre'],ascending=True)
+    provi = penetracion_provincias[penetracion_provincias['Provincia'] == provincia]
+    provi = provi.sort_values(by=['Año','Trimestre'],ascending=True)
     
     for i in lista_pen:
       
-      val = val_prov[i].pct_change() * 100
-      taza_pen[i] = val.mean()
+      provi['taza'] = provi[i].pct_change() * 100
+      taza = provi.groupby('Año')['taza'].mean().reset_index()
+      taza_pen[provincia] = taza['taza'].mean()
 
-    df_taza_pen = pd.DataFrame.from_dict(taza_pen,orient='index',columns=['Taza'])
-    df_general.iloc[contador,1:] = df_taza_pen.T.iloc[0, :df_general.shape[1]]
-
-    contador +=1
+  df_taza_pen = pd.DataFrame.from_dict(taza_pen,orient='index',columns=['Taza'])
     
 
-  return df_general
+  
+    
 
-taza_penetracion_total = taza_crecimiento_penetracion_total(penetracion_provincias)
-hogares = taza_penetracion_total.sort_values(by='Accesos por cada 100 hogares',ascending=False)
-habitantes = taza_penetracion_total.sort_values(by='Accesos por cada 100 hab',ascending=False)
+  return df_taza_pen
 
-paleta_colores = sns.color_palette("colorblind",len(taza_penetracion_total['Provincia'].tolist())).as_hex()
-paletas_colores = sns.color_palette("deep",len(taza_penetracion_total['Provincia'].tolist())).as_hex()
+
+
+
+taza_penetracion_total = taza_crecimiento_penetracion_total(penetracion_provincias) #Obtencion de df de la taza porhabitantes y por hogares
+
+
+hogares = taza_penetracion_total.sort_values(by='Taza',ascending=False) # Data frame con ordenacion por hogares
+
+
+
+
+
+paleta_colores = sns.color_palette("colorblind",len(taza_penetracion_total.index.tolist())).as_hex()
+
 
 
 # Crear subplots (como en el paso anterior)
 figura = make_subplots(rows=1, cols=2,subplot_titles=('Penetracion por hogares','Penetracion por habitantes'))
 
 
-figura.add_trace(go.Bar(x = hogares['Provincia'] , y = hogares['Accesos por cada 100 hogares'],marker=dict(color=paleta_colores)),row = 1 , col = 1)
-figura.add_trace(go.Bar(x = habitantes['Provincia'] , y = habitantes['Accesos por cada 100 hab'],marker=dict(color=paletas_colores)),row = 1 , col = 2)
+figura.add_trace(go.Bar(x = hogares.index, y = hogares['Taza'],marker=dict(color=paleta_colores)),row = 1 , col = 1)
+
 
 
 figura.update_layout(height=600, width=900,title="Taza promedio de crecimiento de penetracion por hogares/habitantes totales")

@@ -1,4 +1,8 @@
 import streamlit as st
+import mysql.connector
+import pandas as pd
+from sqlalchemy import create_engine
+import pymysql
 
 st.title('Analisis del Internet en Argentina')
 
@@ -32,3 +36,53 @@ inter = """Con una velocidad media de descarga de 84,20 Mbit/segundo para la Int
 st.markdown(inter)
 
 st.sidebar.image("imagenes/Argentina-removebg-preview.png")
+
+
+""" Bjar una tabla de my sql a un df
+
+# Conectar a la base de datos
+
+conexion = pymysql.connect(
+                                host = "localhost",
+                                user = "root",
+                                password = "root1234",
+                                database = "telecom_argentina"
+                          )
+
+query = "SELECT * FROM totales_accesos_por_tecnología"
+
+df = pd.read_sql(query,conexion) # Extraccion de una tabla en especifico
+st.session_state.df = df
+
+conexion.close()
+
+st.dataframe(df) """
+
+# Funcion para cargar tablas desde MySQL
+
+def load_table ( connection , table_name):
+    
+    query = f"SELECT * FROM {table_name}"
+    df = pd.read_sql(query,connection)
+    return df
+
+
+if 'dataframes_dict' not in st.session_state:
+    connection = pymysql.connect(
+                                host = "localhost",
+                                user = "root",
+                                password = "root1234",
+                                database = "telecom_argentina"
+                          )
+    
+# Obtener los nombres de todas las tablas en la base de datos
+    table_names_query = "SHOW TABLES"
+    tables = pd.read_sql(table_names_query, connection)
+
+# Cargar todas las tablas en un diccionario de DataFrames
+    st.session_state.dataframes_dict = {
+        table_name: load_table(connection, table_name)
+        for table_name in tables.iloc[:, 0]
+    }
+
+    connection.close()

@@ -3,26 +3,29 @@ import pandas as pd
 import seaborn as sns
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
+import recarga_datos as reload
 
 
-#Extraccion info
-hojas = pd.read_excel("Internet.xlsx",sheet_name=None)
 
-#Diccionario de DataFrames
-data_frames = {}
-for hoja, df in hojas.items():
-  data_frames[hoja] = df
+st.title('Accesos a Internet por Region')
 
+if st.button('Actualizar Datos'):
+   reload.reload_table()
+   st.success('Datos actualizados')
+
+
+
+dataframes_dict = st.session_state.dataframes_dict # Acceder al diccionario de DataFrames
 
 st.title("KPI's")
 
 
 st.subheader('Aumento 2% al acceso al servicio de internet para el proximo trimestre , cada 100 hogares , por provincia')
 
-penetracion_provincias = data_frames['Penetración-poblacion']
+penetracion_provincias = dataframes_dict['penetración_poblacion']
 
 #Agregamos una nueva columna al DataFrame y lea gregamos la columna de Accesos por cada 100 hogares de la hoja hogares
-penetracion_provincias['Accesos por cada 100 hogares'] = data_frames['Penetracion-hogares']['Accesos por cada 100 hogares']
+penetracion_provincias['Accesos por cada 100 hogares'] = dataframes_dict['penetracion_hogares']['Accesos por cada 100 hogares']
 
 
 
@@ -134,37 +137,136 @@ if len(Provincia) != 0:
        st.metric(label = 'Accesos objetivo' , value = kpi , delta = porcentaje)
 
 
-st.subheader('Aumento 5% del numero de accesos de fibra optica para el proximo trimestre , para todas las provinicias ')
-
-data_tec_loc = data_frames['Accesos_tecnologia_localidad'].groupby('Provincia')[['FIBRA OPTICA']].sum()
-data_tec_loc['Nuevo_Acceso'] = data_tec_loc['FIBRA OPTICA'] * 1.05
-
-figura = go.Figure()
-
-# Grafica del trimestre actual
-
-figura.add_trace(go.Bar(
-                      x = data_tec_loc.index , 
-                      y = data_tec_loc['FIBRA OPTICA'] ,
-                      name = 'Acceso Actual',
-                      marker_color = 'darkgreen'
-))
+st.subheader('Aumento 15% del numero de accesos de fibra optica para el proximo año , para todas las provinicias basnadonos en la taza promedio de los ultimos 3 años')
 
 
-figura.add_trace(go.Bar(
-                      x = data_tec_loc.index , 
-                      y = data_tec_loc['Nuevo_Acceso'] ,
-                      name = 'Acceso Aumento 5 %',
-                      marker_color = 'mediumseagreen',
-                      text = data_tec_loc['Nuevo_Acceso']
-))
+dataframes_dict['accesos_tecnologia_localidad'] = dataframes_dict['accesos_tecnologia_localidad'].dropna(subset=['Provincia']) # Eliminamos las filas que tienen en provincia valores nulos
+data_tec_loc = dataframes_dict['accesos_tecnologia_localidad'].groupby('Provincia')[['FIBRA OPTICA']].sum()
 
-st.plotly_chart(figura)
+data_tec_loc['KPI'] = data_tec_loc['FIBRA OPTICA'] * 1.15
+data_tec_loc.reset_index(inplace=True)
+data_tec_loc['Provincia'] = data_tec_loc['Provincia'].str.upper()
+
+
+
+
+# Definir la función que se ejecutará al cambiar la selección
+def actualizar_mensaje():
+    st.session_state['mensaje'] = f"Has seleccionado {len(st.session_state['numero'])} provincias."
+
+ 
+
+provincia = st.multiselect("Elije las provincias",lista_provinicias,max_selections=1,default='Buenos Aires',key='numero', on_change=actualizar_mensaje)
+
+# Mostrar el mensaje actualizado
+st.write(st.session_state.get('mensaje', "Aún no has seleccionado ninguna provincia."))
+
+
+if len(provincia) != 0:
+    provincia = provincia[0]
+
+    tec_provincia = dataframes_dict['accesos_por_tecnología'][dataframes_dict['accesos_por_tecnología']['Provincia']==provincia]
+    tec_provincia = tec_provincia.replace(0,1)
+
+    def taza_crecimiento_tec(data):
+    
+        
+        data = data.sort_values(by=['Año','Trimestre'],ascending=True)
+        
+        
+            
+        data['taza'] = data['Fibra_Optica'].pct_change() * 100
+        taza_trimestre = data.groupby('Año')['taza'].mean().reset_index()
+        
+
+        
+
+        return taza_trimestre
+
+    taza = taza_crecimiento_tec(tec_provincia)
+    taza = taza.loc[8:10,'taza']
+    taza = taza.mean()
+   
+    
+    
+    valor = data_tec_loc[data_tec_loc['Provincia'] == provincia.upper()]['FIBRA OPTICA']
+    valor = valor.reset_index(drop=True) # Reseteamos el indice de la Serie para poder seleccionar solo el valor del indice 0 ya que de otra formaelindice por default esel que correponde al que trae del DF data_tec_loc
+    
+    valor = valor [0] # asignamos el valor del indice 0 de la Serie que es un float a la variable valor
+   
+    suma = (valor * (taza/100))+valor
+    st.write(taza)
+    
+    kpi = data_tec_loc[data_tec_loc['Provincia'] == provincia.upper()]['KPI']
+    kpi.reset_index(drop=True,inplace=True) # drop=True para que no se haga una columna nueva conlos valoresdel incdic original, inplace=True para que tambien haga los cambios en el DF original
+    kpi = kpi[0]
+       
+
+
+    df_kpi_fibra = pd.DataFrame(columns=['Año','Accesos'])
+    df_taza_fibra = pd.DataFrame(columns=['Año','Accesos'])
+
+    fila1 = pd.DataFrame({'Año':2024,'Accesos':valor},index=[0])
+    fila2 = pd.DataFrame({'Año':2025,'Accesos':kpi},index=[1])
+    fila3 = pd.DataFrame({'Año':2025,'Accesos':suma},index=[1])
+    fila4 = pd.DataFrame({'Año':2024,'Accesos':0},index=[0])
+
+    df_kpi_fibra = pd.concat([df_kpi_fibra,fila4])
+    df_kpi_fibra = pd.concat([df_kpi_fibra,fila2])
+
+
+    df_taza_fibra = pd.concat([df_taza_fibra,fila1])
+    df_taza_fibra = pd.concat([df_taza_fibra,fila3])
+
+
+
+
+    # Crear la gráfica de línea
+    figure = go.Figure()
+
+    figure.add_trace(go.Bar(
+        x=df_taza_fibra['Año'],
+        y=df_taza_fibra['Accesos'],
+        marker_color = 'darkred',
+        name='Accesos taza',
+        text = df_taza_fibra['Accesos'],
+        texttemplate='%{text:.3f}' , # Formato del texto
+        textposition='outside',  # Posición del texto
+        textfont = dict(size = 14,color = 'yellow')
+        
+    ))
+
+    figure.add_trace(go.Bar(
+        x=df_kpi_fibra['Año'],
+        y=df_kpi_fibra['Accesos'],
+        marker_color = 'indianred',
+        name='Accesos kpi',
+        
+       
+        
+    ))
+
+    # Personalización
+    figure.update_layout(title='Accesos por Año y Trimestre',
+                  xaxis_title='Periodo',
+                  yaxis_title='Número de Accesos')
+
+    st.plotly_chart(figure)
+
+    st.write('Taza promedio : ',taza)
+    col1 , col2 = st.columns(2)
+
+    with col1:
+      st.write(df_taza_fibra)
+    with col2:
+       porcentaje = (suma * 100) / kpi
+       porcentaje = str(porcentaje) + '%'
+       st.metric(label = 'Accesos objetivo' , value = kpi , delta = porcentaje)
 
 st.subheader(" Acceso de 0 % a la tecnologia de ADSL en 2 años ( tomando la taza de crecimiento)")
 
 # Eliminamos las filas que tienen en provincia valores nulos
-data_frames['Accesos_tecnologia_localidad'] = data_frames['Accesos_tecnologia_localidad'].dropna(subset=['Provincia'])
+dataframes_dict['accesos_tecnologia_localidad'] = dataframes_dict['accesos_tecnologia_localidad'].dropna(subset=['Provincia'])
 
 #Hacemos la sumatoria de accesos de internet por tecnologia
 
@@ -173,7 +275,7 @@ dicc_tecnologias ={
 
 }
 
-dicc_tecnologias['ADSL'] = data_frames['Accesos_tecnologia_localidad']['ADSL'].sum()
+dicc_tecnologias['ADSL'] = dataframes_dict['accesos_tecnologia_localidad']['ADSL'].sum()
 
 trimestres_totales = 9
 
