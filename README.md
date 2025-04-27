@@ -90,57 +90,10 @@ URL : https://datanalytics01.streamlit.app/
 
 ## Visualizacion Powe BI
 
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Imagen a la izquierda y texto a la derecha</title>
-  <style>
-    .wrapper {
-      width: 80%;
-      margin: 50px auto;
-      overflow: hidden;
-    }
+| Imagen | Texto |
+|:------:|:------|
+| <img src="imagenes/provincia.png" width="300"/> | Este es un texto explicativo que se muestra al lado derecho de la imagen. Puedes extender este texto para explicar detalles o describir lo que representa la imagen. |
 
-    .image {
-      float: left;
-      width: 40%;
-    }
-
-    .image img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-    }
-
-    .text {
-      float: left;
-      width: 60%;
-      padding-left: 20px;
-      box-sizing: border-box;
-    }
-
-    .text h2 {
-      margin-top: 0;
-    }
-  </style>
-</head>
-<body>
-
-<div class="wrapper">
-  <div class="image">
-    <img src="imagenes/provincia.png" alt="Imagen de ejemplo">
-  </div>
-  <div class="text">
-    <h2>Título del Texto</h2>
-    <p>
-      Pagina donde se visualiza la cantidad de usuarios por cada provincia de Argentina.
-      Tambien se muestra la cantidad de susuarios por velocidad de bajada
-    </p>
-  </div>
-</div>
-
-</body>
-</html>
 
 
 ## Contenido del repositorio
