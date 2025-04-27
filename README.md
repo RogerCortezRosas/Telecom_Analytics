@@ -106,6 +106,20 @@ URL : https://datanalytics01.streamlit.app/
   </tr>
 </table>
 
+<table>
+  <tr>
+    <td>
+      <img src="imagenes/velocidades.png" width="2100">
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <h3>Comportamiento de las velocidades</h3>
+      <p>
+        En esta pagina se visualizan las graficas del comportamiento del acceso a distintas velocidades 
+        a traves de tiempo,tambien la taza de crecimiento y se cladifican por provincias.
+      </p>
+    </td>
+  </tr>
+</table>
 
 
 ## Contenido del repositorio
