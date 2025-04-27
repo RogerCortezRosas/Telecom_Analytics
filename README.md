@@ -90,13 +90,9 @@ URL : https://datanalytics01.streamlit.app/
 
 ## Visualizacion Powe BI
 
-<p align="left">
-  <img src="imagenes/provincia.png" alt="Imagen de ejemplo" width="300" style="margin-right:20px; float:left;">
-</p>
 
-<p align="right">
-  Este es un texto explicativo que aparece a la derecha de la imagen. Puedes usar este método para colocar imágenes y texto uno al lado del otro dentro de tu README. Sin embargo, el "flotado" no siempre funciona en todos los visores de Markdown, por lo que debes probar cómo se ve en GitHub o tu plataforma.
-</p>
+|:------:|:------|
+| <img src="imagenes/provincia.png" width="1400"/> | Este es un texto explicativo que se muestra al lado derecho de la imagen. Puedes extender este texto para explicar detalles o describir lo que representa la imagen. |
 
 
 
