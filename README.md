@@ -136,6 +136,21 @@ URL : https://datanalytics01.streamlit.app/
   </tr>
 </table>
 
+<table>
+  <tr>
+    <td>
+      <img src="imagenes/kpi.png" width="3500">
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <h3>KPI</h3>
+      <p>
+        En esta pagina se visualizan las graficas para visualizar si se cumple el objetivo 
+        del KPI que es "Aumento del 2% del incremento de usuarios.
+      </p>
+    </td>
+  </tr>
+</table>
+
 ## Contenido del repositorio
 
 
