@@ -89,45 +89,62 @@ Para acceder al dasboard ingresar a la siguiente enlace :
 URL : https://datanalytics01.streamlit.app/
 
 ## Visualizacion Powe BI
+
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Usuarios por provincia</title>
-    <style>
-        .container {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-        }
-        .container img {
-            max-width: 300px;
-            height: auto;
-            margin-right: 20px;
-            border-radius: 10px; /* opcional para bordes redondeados */
-        }
-        .container .text {
-            font-size: 18px;
-            color: #333;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Imagen a la izquierda y texto a la derecha</title>
+  <style>
+    .wrapper {
+      width: 80%;
+      margin: 50px auto;
+      overflow: hidden;
+    }
+
+    .image {
+      float: left;
+      width: 40%;
+    }
+
+    .image img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .text {
+      float: left;
+      width: 60%;
+      padding-left: 20px;
+      box-sizing: border-box;
+    }
+
+    .text h2 {
+      margin-top: 0;
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
+<div class="wrapper">
+  <div class="image">
     <img src="imagenes/provincia.png" alt="Imagen de ejemplo">
-    <div class="text">
-        <h2>Título del Texto</h2>
-        <p>
-            Pagina donde se visualiza la cantidad de usuarios por cada provincia de Argentina.
-            Tmbien se muestra la cantidad de susuarios por velocidad de bajada
-        </p>
-    </div>
+  </div>
+  <div class="text">
+    <h2>Título del Texto</h2>
+    <p>
+      Pagina donde se visualiza la cantidad de usuarios por cada provincia de Argentina.
+      Tambien se muestra la cantidad de susuarios por velocidad de bajada
+    </p>
+  </div>
 </div>
 
 </body>
 </html>
 
+
 ## Contenido del repositorio
+
 
 Este repositorio cuenta con tres carpetas las cuales se describen a continuacion :
 
