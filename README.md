@@ -94,7 +94,7 @@ URL : https://datanalytics01.streamlit.app/
   <img src="imagenes/provincia.png" alt="Imagen de ejemplo" width="300" style="margin-right:20px; float:left;">
 </p>
 
-<p align="left">
+<p align="right">
   Este es un texto explicativo que aparece a la derecha de la imagen. Puedes usar este método para colocar imágenes y texto uno al lado del otro dentro de tu README. Sin embargo, el "flotado" no siempre funciona en todos los visores de Markdown, por lo que debes probar cómo se ve en GitHub o tu plataforma.
 </p>
 
