@@ -109,7 +109,7 @@ URL : https://datanalytics01.streamlit.app/
 <table>
   <tr>
     <td>
-      <img src="imagenes/velocidades.png" width="2600">
+      <img src="imagenes/velocidades.png" width="3000">
     </td>
     <td style="vertical-align: top; padding-left: 20px;">
       <h3>Comportamiento de las velocidades</h3>
