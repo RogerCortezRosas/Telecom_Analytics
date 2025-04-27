@@ -97,10 +97,10 @@ URL : https://datanalytics01.streamlit.app/
       <img src="imagenes/provincia.png" width="2100">
     </td>
     <td style="vertical-align: top; padding-left: 20px;">
-      <h3>Título del Texto</h3>
+      <h3>Usuarios por provincia</h3>
       <p>
-        Este es un texto explicativo que aparece exactamente al lado derecho de la imagen.
-        Aquí puedes extender la descripción todo lo que quieras, y siempre se mantendrá alineado correctamente.
+        En esta pagina se visualizan las graficas de el numero de usuarios por cada provincia en Argentina.
+        Tambien se muestran la cantidad de usuarios por velocidad de bajada.
       </p>
     </td>
   </tr>
