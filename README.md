@@ -11,7 +11,7 @@ En este repositorio contiene el Analisis de datos de internet en Argentina en do
 
 ### **Contenido**
 
-El dashboard contiene 7 paginas principales en las cuales cada una hace analisis de una rubrica , las paginas son:
+ 📈El dashboard contiene 7 paginas principales en las cuales cada una hace analisis de una rubrica , las paginas son:
 - Acceso a Internet por provincia
 - Acceso por velocidades
 - Acceso por tecnologia
@@ -19,6 +19,8 @@ El dashboard contiene 7 paginas principales en las cuales cada una hace analisis
 - Penetracion de poblacion
 - Ingresos
 - KPI's
+
+📈Visulizacion Power BI
 
 #### **Acceso a Internet por provincia**
 
@@ -85,6 +87,45 @@ En esta pagina se encuentran graficados los KPI's
 Para acceder al dasboard ingresar a la siguiente enlace :
 
 URL : https://datanalytics01.streamlit.app/
+
+## Visualizacion Powe BI
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios por provincia</title>
+    <style>
+        .container {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+        .container img {
+            max-width: 300px;
+            height: auto;
+            margin-right: 20px;
+            border-radius: 10px; /* opcional para bordes redondeados */
+        }
+        .container .text {
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img src="imagenes/provincia.png" alt="Imagen de ejemplo">
+    <div class="text">
+        <h2>Título del Texto</h2>
+        <p>
+            Pagina donde se visualiza la cantidad de usuarios por cada provincia de Argentina.
+            Tmbien se muestra la cantidad de susuarios por velocidad de bajada
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
 
 ## Contenido del repositorio
 
