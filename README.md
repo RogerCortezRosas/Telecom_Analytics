@@ -145,7 +145,7 @@ URL : https://datanalytics01.streamlit.app/
       <h3>KPI</h3>
       <p>
         En esta pagina se visualizan las graficas para visualizar si se cumple el objetivo 
-        del KPI que es "Aumento del 2% del incremento de usuarios.
+        del KPI que es "Aumento del 2% del incremento de usuarios".
       </p>
     </td>
   </tr>
@@ -165,6 +165,7 @@ A continuacion se hace una breve descripcion de los archivos que se encuentran d
  - EDA.ipynb : Es el notebook que contiene la graficas y analisis de la data
  - Internet.xlsx : Archivo que conteiene la informacion
  - requiremnts.txt : Archivo en donde se localizan las librerias utilizadas
+ - powerBI.pbix : Archivo de power BI
 
 ## Librerias utilizadas
 
@@ -182,7 +183,7 @@ Para ver la lista completa de librerias con su version acceder al archivo requir
 
 Rogelio Cortez Rosas
 
-**Contacto **
+**Contacto**
 
 correo : rcortezrosas@gmail.com
 
