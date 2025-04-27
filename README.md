@@ -90,9 +90,8 @@ URL : https://datanalytics01.streamlit.app/
 
 ## Visualizacion Powe BI
 
-| Imagen | Texto |
-|:------:|:------|
-| <img src="imagenes/provincia.png" width="700"/> | Este es un texto explicativo que se muestra al lado derecho de la imagen. Puedes extender este texto para explicar detalles o describir lo que representa la imagen. |
+
+| <img src="imagenes/provincia.png" width="1400"/> | Este es un texto explicativo que se muestra al lado derecho de la imagen. Puedes extender este texto para explicar detalles o describir lo que representa la imagen. |
 
 
 
