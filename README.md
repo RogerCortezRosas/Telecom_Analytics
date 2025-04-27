@@ -91,14 +91,20 @@ URL : https://datanalytics01.streamlit.app/
 ## Visualizacion Powe BI
 
 
-<p align="center">
-  <img src="imagenes/provincia.png" width="250" style="margin: 10px;">
-  <img src="imagenes/velocidades.png" width="250" style="margin: 10px;">
-</p>
 
-<p align="center">
-  <b>Descripción Imagen 1</b> &nbsp;&nbsp;&nbsp; <b>Descripción Imagen 2</b>
-</p>
+<div style="display: flex; align-items: center;">
+
+  <img src="imagenes/provincia.png" width="200" style="margin-right: 20px;">
+
+  <div>
+    <h3>Título del Texto</h3>
+    <p>
+      Este es un texto explicativo que aparece al lado derecho de la imagen.
+      Puedes escribir aquí una descripción más detallada o cualquier información que quieras mostrar junto a la imagen.
+    </p>
+  </div>
+
+</div>
 
 
 
