@@ -94,7 +94,7 @@ URL : https://datanalytics01.streamlit.app/
 <table>
   <tr>
     <td>
-      <img src="imagenes/provincia.png" width="1400">
+      <img src="imagenes/provincia.png" width="2100">
     </td>
     <td style="vertical-align: top; padding-left: 20px;">
       <h3>Título del Texto</h3>
