@@ -121,6 +121,20 @@ URL : https://datanalytics01.streamlit.app/
   </tr>
 </table>
 
+<table>
+  <tr>
+    <td>
+      <img src="imagenes/tecnologias.png" width="3500">
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <h3>Tecnologias</h3>
+      <p>
+        En esta pagina se visualizan las graficas del comportamiento del numero de usuarios por cada tecnologia
+        y la taza de crecimiento de cada una de ellas.
+      </p>
+    </td>
+  </tr>
+</table>
 
 ## Contenido del repositorio
 
