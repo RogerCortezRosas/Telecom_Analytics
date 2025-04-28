@@ -188,3 +188,7 @@ Rogelio Cortez Rosas
 correo : rcortezrosas@gmail.com
 
 Git hub user : RogerCortezRosas
+
+Linkedin : https://www.linkedin.com/in/rogelio-cortez-rosas
+
+tel : +52 5657047920
